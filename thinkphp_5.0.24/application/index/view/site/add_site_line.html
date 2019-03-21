@@ -1,0 +1,82 @@
+{include file="index/meta" /}
+<div class="page-container">
+    <div class="text-c"> 开车日期：
+        <input type="text" id="start" name="start" class="input-text " style="width:180px;">
+    </div>
+    <div class="text-c" style="margin-top: 20px;"> 修改截止日期：
+        <input type="text" id="end" name="end" class="input-text " style="width:180px;">
+    </div>
+    <div class="mt-20" style="text-align: center;">
+        <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+            <tr class="text-c">
+                <th>站点名称</th>
+                <th>是否允许选择</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $data as $k=>$v}
+            <tr>
+                <td style="text-align: center;">{$v['name']}</td>
+                <td style="text-align: center;"><input type="checkbox" class="site_check_item" value="{$v['id']}">
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        <input class="btn btn-primary radius" type="button" value="新增" onclick="addSiteLine()  "
+               style="margin-top: 30px;">
+    </div>
+</div>
+<script type="text/javascript" src="/static/h-ui//lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script>
+    //自定义日期格式
+    laydate.render({
+        elem: '#start',
+        type: 'date',
+        value: ""
+    });
+    laydate.render({
+        elem: '#end',
+        type: 'datetime',
+        value: ""
+    });
+
+    //新增
+    function addSiteLine() {
+        var url = "{:url('/index/site/addsiteline')}";
+        //获取2个时间
+        var apply_time = $('#start').val();
+        var end_time = $('#end').val();
+        //获取选择的站点数组
+        var checkSiteArr = [];
+        $('input:checkbox:checked').each(function () {
+            checkSiteArr.push($(this).val());
+        });
+        if (checkSiteArr.length > 0) {
+            checkSiteArr = checkSiteArr.join('-');
+        } else {
+            checkSiteArr = '';
+        }
+        $.ajax({
+            url: url,
+            data: {
+                'apply_time': apply_time,
+                'end_time': end_time,
+                'arr': checkSiteArr
+            },
+            type: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                layer.msg(data.msg);
+                if (data.result) {
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
+                }
+
+            }
+        });
+    }
+</script>
+{include file="index/footer" /}

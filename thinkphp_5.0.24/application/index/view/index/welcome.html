@@ -1,0 +1,46 @@
+﻿{include file='index/meta' /}
+<title>我的桌面</title>
+</head>
+<body>
+<div class="page-container">
+    <table class="table table-border table-bordered table-bg">
+        <thead>
+        <tr>
+            <th colspan="7" scope="col">菜品信息统计</th>
+        </tr>
+        <tr class="text-c">
+            <th>菜品名称</th>
+            <th>票数</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach $food as $v}
+        <tr class="text-c">
+            <td>{$v['name']}</td>
+            <td>{$v['counts']}</td>
+        </tr>
+        {/foreach}
+        </tbody>
+    </table>
+    <table class="table table-border table-bordered table-bg" style="margin-top: 20px;">
+        <thead>
+        <tr>
+            <th colspan="7" scope="col">站点信息统计</th>
+        </tr>
+        <tr class="text-c">
+            <th>站点名称</th>
+            <th>人数</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach $site as $v}
+        <tr class="text-c">
+            <td>{$v['name']}</td>
+            <td>{$v['counts']}</td>
+        </tr>
+        {/foreach}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

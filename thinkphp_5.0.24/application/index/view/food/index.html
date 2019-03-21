@@ -1,0 +1,137 @@
+{include file="index/meta" /}
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>
+    首页
+    <span class="c-gray en">&gt;</span>
+    菜单管理
+    <span class="c-gray en">&gt;</span>
+    菜单录入
+    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="l">
+			<a class="btn btn-primary radius" onclick="addFood(1)" href="javascript:;">
+				<i class="Hui-iconfont">&#xe600;</i>
+				手动添加菜单
+			</a>
+		</span>
+        <span class="l">
+        <select size="1" id="food_id" style="padding: 6px;margin-left: 10px;">
+            <option value="" selected>请选择</option>
+            {foreach $food as $v}
+                <option value="{$v['id']}">{$v['name']}</option>
+            {/foreach}
+        </select>
+        </span>
+        <span class="l" style="margin-left: 10px;">
+			<a class="btn btn-primary radius" onclick="addFood(2)" href="javascript:;">
+				<i class="Hui-iconfont">&#xe600;</i>
+				选择添加菜单
+			</a>
+		</span>
+        <div class="text-c"> 投票截止日期：
+            <input type="text" id="datemin" name="end_time" class="input-text " style="width:180px;">
+        </div>
+    </div>
+    <div class="mt-20">
+
+        <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+            <tr class="text-c">
+                <th>菜单名称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {if !empty($data['food_list'])}
+            {foreach $data['food_list'] as $k=>$v }
+            <tr class="food_item">
+                <td style="text-align: center;"><input type="text" class="input-text foods_items" name="item_id[]"
+                                                       value="{$v['food_name']}">
+                    <input type="hidden" class="food_id" name="food_id[]" value="{$v['food_id']}">
+                </td>
+                <td style="text-align: center;"><a href="javascript:;" class="del-btn">删除</a></td>
+            </tr>
+            {/foreach}
+            {/if}
+            </tbody>
+        </table>
+        <input class="btn btn-primary radius" type="button" id="savedData" value="保存"
+               style="margin-top: 50px;">
+        <input type="hidden" id="menu_id" name="id" value="{if isset($data['id'])}{$data['id']}{/if}">
+    </div>
+</div>
+<script type="text/javascript" src="/static/h-ui//lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script>
+    //自定义日期格式
+    laydate.render({
+        elem: '#datemin',
+        type: 'datetime',
+        value: "{if isset($data['end_time'])}{$data['end_time']}{/if}"
+    });
+    $("table.table-sort").on("click", "a.del-btn", function (event) {
+        var target = $(event.target);
+        target.parents('.food_item').remove();
+    });
+
+    //新增菜单
+    function addFood(type) {
+        var id = '';
+        var name = '';
+        var types = type;
+        if (2 == types) { //选择
+            id = $('#food_id option:selected').val();
+            name = $('#food_id option:selected').text();
+            if (id == '') {
+                layer.msg('请选择一个再添加!');
+                return false;
+            }
+        }
+        var $obj = ' <tr class="food_item">' +
+            '<td style="text-align: center;"><input type="text" class="input-text foods_items" name="item_id[]" value="' + name + '">' + '<input type="hidden" name="food_id[]" class="food_id" value="' + id + '"> </td>' +
+            '<td style="text-align: center;"><a href="javascript:;" class="del-btn">删除</a></td> </tr>';
+        $('table.table-sort tbody').append($obj);
+    }
+
+    $('.foods_items').on('input', function () {
+        $(this).next().val('');
+    });
+    $('#savedData').click(function () {
+        var id_arr = [];
+        var name_arr = [];
+        var item_length = $('.food_item').length;
+        var menu_id = $('#menu_id').val();
+        var menuUrl = "{:url('/index/food/menu')}";
+        var time = $('#datemin').val();
+        for (var i = 0; i < item_length; i++) {
+            var id = $('.food_item').eq(i).find('.food_id').val();
+            var name = $('.food_item').eq(i).find('.foods_items').val();
+            if (id != '' && name != '') {
+                id_arr.push(id);
+            }
+            if (id == '' && name != '') {
+                name_arr.push(name);
+            }
+        }
+        $.ajax({
+            url: menuUrl,
+            data: {
+                'id': menu_id,
+                'name_arr': name_arr.join('~'),
+                'id_arr': id_arr.join('-'),
+                'time': time
+            },
+            type: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                layer.msg(data.msg);
+                window.location.reload();
+            }
+        });
+    });
+</script>
+{include file="index/footer" /}

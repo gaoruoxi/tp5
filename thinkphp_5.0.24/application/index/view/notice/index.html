@@ -1,0 +1,55 @@
+{include file="index/meta" /}
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>
+    首页
+    <span class="c-gray en">&gt;</span>
+    公告管理
+    <span class="c-gray en">&gt;</span>
+    公告列表
+    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="l">
+			<a class="btn btn-primary radius" href="{:url('/index/notice/add')}">
+				<i class="Hui-iconfont">&#xe600;</i>
+				添加公告
+			</a>
+		</span>
+    </div>
+    <div class="mt-20">
+
+        <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+            <tr class="text-c">
+                <th>ID</th>
+                <th>内容</th>
+                <th>是否置顶</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $data as $k=>$v }
+            <tr class="food_item">
+                <td style="text-align: center;">{$v['id']}</td>
+                <td style="text-align: center;">{$v['content']}</td>
+                <td style="text-align: center;">{if $v['is_roof'] eq 1}是{else}否{/if}</td>
+                <td style="text-align: center;">
+                    <a href="{:url('/index/notice/del',['id'=>$v['id']])}">删除</a>
+                    <a href="{:url('/index/notice/edit',['id'=>$v['id']])}">编辑</a>
+                    {if $v['is_roof'] eq 1}
+                    <a href="{:url('/index/notice/cancle_roof',['id'=>$v['id']])}">取消置顶</a>
+                    {else}
+                    <a href="{:url('/index/notice/roof',['id'=>$v['id']])}">置顶</a>
+                    {/if}
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+</div>
+{include file="index/footer" /}

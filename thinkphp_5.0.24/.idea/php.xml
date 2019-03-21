@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/thinkphp_5.0.24/vendor/topthink/think-queue" />
+      <path value="$PROJECT_DIR$/thinkphp_5.0.24/vendor/topthink/think-migration" />
+      <path value="$PROJECT_DIR$/thinkphp_5.0.24/vendor/topthink/think-mongo" />
+      <path value="$PROJECT_DIR$/thinkphp_5.0.24/vendor/workerman/workerman" />
+      <path value="$PROJECT_DIR$/thinkphp_5.0.24/vendor/composer" />
+      <path value="$PROJECT_DIR$/thinkphp_5.0.24/vendor/topthink/think-oracle" />
+      <path value="$PROJECT_DIR$/thinkphp_5.0.24/vendor/topthink/think-image" />
+      <path value="$PROJECT_DIR$/thinkphp_5.0.24/vendor/phpoffice/phpexcel" />
+      <path value="$PROJECT_DIR$/thinkphp_5.0.24/vendor/topthink/think-captcha" />
+      <path value="$PROJECT_DIR$/thinkphp_5.0.24/vendor/topthink/think-helper" />
+      <path value="$PROJECT_DIR$/thinkphp_5.0.24/vendor/topthink/think-installer" />
+      <path value="$PROJECT_DIR$/thinkphp_5.0.24/vendor/topthink/think-worker" />
+      <path value="$PROJECT_DIR$/vendor/workerman/workerman" />
+      <path value="$PROJECT_DIR$/vendor/phpoffice/phpexcel" />
+      <path value="$PROJECT_DIR$/vendor/topthink/think-worker" />
+      <path value="$PROJECT_DIR$/vendor/topthink/think-installer" />
+      <path value="$PROJECT_DIR$/vendor/topthink/think-migration" />
+      <path value="$PROJECT_DIR$/vendor/topthink/think-queue" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/topthink/think-oracle" />
+      <path value="$PROJECT_DIR$/vendor/topthink/think-mongo" />
+      <path value="$PROJECT_DIR$/vendor/topthink/think-captcha" />
+      <path value="$PROJECT_DIR$/vendor/topthink/think-image" />
+      <path value="$PROJECT_DIR$/vendor/topthink/think-helper" />
+    </include_path>
+  </component>
+</project>
