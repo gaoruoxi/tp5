@@ -94,7 +94,6 @@ CREATE TABLE canteen.notice
     is_del tinyint(1) DEFAULT '0' NOT NULL COMMENT '是否删除 0-否 1-是'
 );
 CREATE UNIQUE INDEX notice_id_uindex ON canteen.notice (id);
-INSERT INTO canteen.notice (id, content, is_roof, is_del) VALUES (1, '6666', 0, 0);
 INSERT INTO canteen.notice (id, content, is_roof, is_del) VALUES (2, '77778888', 1, 0);
 CREATE TABLE canteen.site
 (
