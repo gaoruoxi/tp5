@@ -1,0 +1,86 @@
+{include file="index/meta" /}
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <form action="{:url('uploadEmpData')}" method="post" enctype="multipart/form-data">
+           <span class="btn-upload">
+  <a href="javascript:void(0);" class="btn btn-primary radius btn-upload"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
+  <input type="file" multiple name="empdata" id="file" class="input-file">
+            </span>
+            <input class="btn btn-primary radius" type="button" id="saveUploadData" value="保存上传数据">
+            <input class="btn btn-primary radius" type="button" id="clearUploadData" value="清空上传数据">
+        </form>
+
+    </div>
+    <div class="mt-20">
+        <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+            <tr class="text-c">
+                <th width="60">ID</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>联系电话</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $data as $k=>$v}
+            <tr>
+                <td style="text-align: center;">{$v['id']}</td>
+                <td style="text-align: center;">{$v['name']}</td>
+                <td style="text-align: center;">{$v['gender']}</td>
+                <td style="text-align: center;">{$v['phone']}</td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        <style>
+            .pagination{
+                margin-top: 20px;
+                text-align: center;
+                clear: both;
+            }
+            .pagination li {
+                float: left;
+            }
+            .pagination li a,.pagination li span{
+                padding: 5px 10px;
+                margin-left: 10px;
+
+            }
+            .pagination li a{
+                background: #0e90d2;
+                border: 1px solid #0e90d2;
+                border-radius: 10px;
+            }
+        </style>
+        {$data->render()}
+    </div>
+</div>
+<script type="text/javascript" src="/static/h-ui//lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script>
+    $('#file').change(function () {
+        $('form').submit();
+    });
+    $('#saveUploadData').on('click', function () {
+        var url = "{:url('/index/emp/save')}";
+        $.post(url, {}, function (data) {
+            if (data.result) {
+                layer.msg(data.msg);
+                setTimeout(function () {
+                    window.location.reload();
+                },1000);
+            }
+            layer.msg(data.msg);
+        });
+    });
+    $('#clearUploadData').on('click', function () {
+        var url = "{:url('/index/emp/clear')}";
+        $.post(url, {}, function (data) {
+            if (data.result) {
+                layer.msg(data.msg);
+                window.location.reload();
+            }
+            layer.msg(data.msg);
+        });
+    });
+</script>
+{include file="index/footer" /}

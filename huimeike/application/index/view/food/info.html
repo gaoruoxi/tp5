@@ -1,0 +1,29 @@
+{include file="index/meta" /}
+<div class="page-container">
+    <div class="mt-20">
+        <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+            <tr class="text-c">
+                <th>菜品名称</th>
+                <th>票数</th>
+            </tr>
+            </thead>
+            <tbody>
+            {if !empty($data)}
+            {foreach $data as $k=>$v }
+            <tr class="food_item">
+                <td style="text-align: center;">
+                    {$v['food_name']}
+                </td>
+                <td style="text-align: center;">
+                    {$v['count']}
+                </td>
+            </tr>
+            {/foreach}
+            {/if}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript" src="/static/h-ui//lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+{include file="index/footer" /}

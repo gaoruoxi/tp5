@@ -1,0 +1,114 @@
+{include file="index/meta" /}
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>
+    首页
+    <span class="c-gray en">&gt;</span>
+    菜单管理
+    <span class="c-gray en">&gt;</span>
+    菜单库列表
+    <a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+<div class="page-container">
+    <form action="{:url('/index/food/fooddatabase')}" style="display: inline-block;">
+        菜品名称: <input type="text" class="input-text" name="name" value="{$name}"  style="width:150px" placeholder="输入菜品名称"  >
+        <button type="submit" class="btn btn-success"  name=""><i class="Hui-iconfont">&#xe665;</i> 搜菜品</button>
+        <button type="reset" class="btn btn-success" id="reset-btn"  name=""><i class="Hui-iconfont">&#xe665;</i> 重置</button>
+    </form>
+    <div class="mt-20">
+        <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+            <tr class="text-c">
+                <th width="60">ID</th>
+                <th>菜品名称</th>
+                <th>票数</th>
+                <th>是否入库</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $data as $k=>$v}
+            <tr>
+                <td style="text-align: center;">{$v['id']}</td>
+                <td style="text-align: center;">{$v['name']}</td>
+                <td style="text-align: center;">{$v['count']}</td>
+                <td style="text-align: center;">{if $v['is_save'] eq 1}是{else}否{/if}</td>
+                <td style="text-align: center;">
+                    {if $v['is_save'] eq 1}
+                    <a href="javascript:;" onclick="cancel_warehousing({$v['id']})">取消入库</a>
+                    {else}
+                    <a href="javascript:;" onclick="warehousing({$v['id']})">入库</a>
+                    {/if}
+                    <a href="javascript:;" onclick="delSite({$v['id']})">删除</a>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript" src="/static/h-ui//lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script>
+    //删除菜品
+    function delSite(id) {
+        var url = "{:url('/index/food/delete')}";
+        $.ajax({
+            url: url,
+            data: {
+                'id': id
+            },
+            dataType: 'json',
+            type: 'POST',
+            success: function (data) {
+                layer.msg(data.msg);
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1000);
+            }
+        });
+    }
+
+    //菜品入库
+    function warehousing(id) {
+        var url = "{:url('/index/food/save')}";
+        $.ajax({
+            url: url,
+            data: {
+                'id': id
+            },
+            dataType: 'json',
+            type: 'POST',
+            success: function (data) {
+                layer.msg(data.msg);
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1000);
+            }
+        });
+    }
+
+    //取消菜品入库
+    function cancel_warehousing(id) {
+        var url = "{:url('/index/food/canclesave')}";
+        $.ajax({
+            url: url,
+            data: {
+                'id': id
+            },
+            dataType: 'json',
+            type: 'POST',
+            success: function (data) {
+                layer.msg(data.msg);
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1000);
+            }
+        });
+    }
+    $('#reset-btn').click(function () {
+        window.location.href="{:url('/index/food/fooddatabase')}";
+    });
+</script>
+{include file="index/footer" /}

@@ -1,0 +1,23 @@
+{include file="index/meta" /}
+<form class="form form-horizontal" id="form-article-add" action="{:url('/index/notice/edit')}" method="post">
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>公告内容：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text"  placeholder="公告内容" id="" value="{$data['content']}" name="content">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>是否置顶：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="checkbox" value="1" name="is_roof" {if $data['is_roof'] eq 1} checked{/if} >
+            <input type="hidden" name="id" value="{$data['id']}">
+        </div>
+    </div>
+    <div class="row cl">
+        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+            <button  class="btn btn-secondary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+            <button  class="btn btn-secondary radius" onclick="javascript:window.location.href='{:url('/index/notice/index')}';" type="button"><i class="Hui-iconfont">&#xe632;</i> 返回</button>
+        </div>
+    </div>
+</form>
+{include file="index/footer" /}
